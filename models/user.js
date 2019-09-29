@@ -19,6 +19,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  doctorName: {
+    type: String,
+    required: true
+  },
   username: {
     type: String,
     required: true

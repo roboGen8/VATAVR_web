@@ -40,14 +40,27 @@ export class RegisterComponent implements OnInit {
   }
 
   public writeUserData(registrationInfo) {
-    firebase.database().ref('users/' + registrationInfo.username).set({
-      Name: registrationInfo.name, 
-      Email: registrationInfo.email, 
-      PhoneNumber: registrationInfo.phoneNumber, 
-      UserType: registrationInfo.userType, 
-      Username: registrationInfo.username, 
-      Password: registrationInfo.password
-    });
+    if (registrationInfo.userType == "Doctor") {
+      firebase.database().ref('doctors/' + registrationInfo.username).set({
+        Name: registrationInfo.name, 
+        Email: registrationInfo.email, 
+        PhoneNumber: registrationInfo.phoneNumber, 
+        UserType: registrationInfo.userType,
+        Username: registrationInfo.username, 
+        Password: registrationInfo.password
+      });
+    } else {
+      firebase.database().ref('patients/' + registrationInfo.username).set({
+        Name: registrationInfo.name, 
+        Email: registrationInfo.email, 
+        PhoneNumber: registrationInfo.phoneNumber, 
+        UserType: registrationInfo.userType, 
+        doctorName: registrationInfo.doctorName, 
+        Username: registrationInfo.username, 
+        Password: registrationInfo.password
+      });
+    }
+    
     this.router.navigate(['/Login']);
   }
 

@@ -13,6 +13,7 @@ router.post('/register', (req, res, next) => {
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         userType: req.body.userType,
+        doctorName: req.body.doctorName,
         username: req.body.username,
         password: req.body.password,
     });

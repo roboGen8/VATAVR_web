@@ -33,6 +33,11 @@
           </div>
       </div>
       <div class="form-group row">
+        <label for="doctorName">If you are a patient, who is your doctor?</label>
+        <input type="text" class="form-control" id="doctorName" [required]="false"
+               [(ngModel)]="registrationInfo.doctorName" minlength="1" name="doctorName">
+      </div>
+      <div class="form-group row">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" [required]="true"
                [(ngModel)]="registrationInfo.username" minlength="1" name="username">

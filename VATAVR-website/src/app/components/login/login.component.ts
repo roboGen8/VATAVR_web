@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
   /* Credentials Object properties binded by ngModel in view */
   public credentials: Credentials = {
     username: '',
-    password: ''
+    password: '',
+    userType: ''
   };
 
   /* tell Angular Inject userService singleton into this class as dependency and Router service */
@@ -37,8 +38,12 @@ export class LoginComponent implements OnInit {
 
   public checkUser(db, credentials) {
     // var ref = db.ref('users/' + credentials.username);
-
-    var leadsRef = db.ref('users');
+    if (credentials.userType == 'Patient') {
+      var leadsRef = db.ref('patients');
+    } else {
+      var leadsRef = db.ref('doctors');
+    }
+    
     leadsRef.on('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var childData = childSnapshot.val();
@@ -124,7 +129,14 @@ export class LoginComponent implements OnInit {
 
           /* navigate to Home Page on successful registration, delay by one sec and half */
           setTimeout(() => {
-            this.router.navigate(['/Home']);
+            
+            if (this.credentials.userType == 'Patient') {
+              this.router.navigate(['/Home']);
+            }
+            else {
+              this.router.navigate(['/EMR']);
+            }
+            
           }, 1500);
   }
 

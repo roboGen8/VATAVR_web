@@ -17,6 +17,16 @@
         <input type="password" class="form-control" id="password" placeholder="Password" [required]="true"
                [(ngModel)]="credentials.password" minlength="1" name="password">
       </div>
+      <div class="form-group">
+        <label for="userType">Are you a doctor or a patient</label>
+        <!-- <input type="text" class="form-control" id="userType" [required]="true"
+               [(ngModel)]="registrationInfo.userType" minlength="1" name="userType"> -->
+          <div>
+            <input type="radio" class="form-control" id="userType" [required]="true" [(ngModel)]="credentials.userType" minlength="1"name="userType" value="Doctor"> Doctor<br>
+            <input type="radio" class="form-control" id="userType" [required]="true" [(ngModel)]="credentials.userType" minlength="1"name="userType" value="Patient"> Patient<br>
+         
+          </div>
+      </div>
       <div class="button-container">
         <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="!loginForm.form.valid">Login
         </button>

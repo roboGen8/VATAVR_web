@@ -13,6 +13,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {AppRoutingModule} from './app-routing.module';
 import {UserService} from './services/user-service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { EmrComponent } from './components/emr/emr.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    EmrComponent
   ],
   imports: [
     BrowserModule,

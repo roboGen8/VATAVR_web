@@ -11,6 +11,10 @@
           [routerLink]="['/Home']">
         <a class="nav-link" href="/Home">Dashboard <span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+          [routerLink]="['/']">
+        <a class="nav-link" href="/EMR">EMR <span class="sr-only">(current)</span></a>
+      </li>
     </ul>
     <ul  class="navbar-nav">
       <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
