@@ -97,20 +97,23 @@ export class HomeComponent implements OnInit {
         var childData = childSnapshot.val();
         console.log(childData.v0);
         //Mean Vertical
-        v_sum = childData.v0 + childData.v1 +childData.v2 +childData.v3 + childData.v4;
+        v_sum = Math.abs(childData.v0) + Math.abs(childData.v1) 
+        +Math.abs(childData.v2) +Math.abs(childData.v3) + Math.abs(childData.v4);
         
         v_sum /= 5;
         v_sum /= 15;
         v_sum *= 100;
-        
+        v_sum = 100 - v_sum;
         //End of Mean Vertical
       
         //Mean Tangential
-        t_sum = childData.t0 + childData.t1 +childData.t2 +childData.t3 + childData.t4;
+        t_sum = Math.abs(childData.t0) + Math.abs(childData.t1) 
+        +Math.abs(childData.t2) +Math.abs(childData.t3) + Math.abs(childData.t4);
         
         t_sum /= 5;
         t_sum /= 45;
         t_sum *= 100;
+        t_sum = 100 - t_sum;
         //End of Tangential
         let date = childSnapshot.key.split("-");
         console.log(date);
@@ -118,56 +121,58 @@ export class HomeComponent implements OnInit {
         tangentialPoints[count] = {x: new Date(+date[2], +date[0] - 1, +date[1]), y: t_sum};
         count++;
         });
-        
+        createChart();
       });
-      console.log(verticalPoints);
     
 		
-		let chart = new CanvasJS.Chart("chartContainer", {
-      animationEnabled: true,
-      theme: "light2",
-      width: 1000,
-      height: 300,
-      axisX:{
-        valueFormatString: "DD MMM",
-        crosshair: {
-          enabled: true,
-          snapToDataPoint: true
-        }
-      },
-      axisY: {
-        title: "Accuracy (%)",
-        crosshair: {
-          enabled: true
-        }
-      },
-      toolTip:{
-        shared:true
-      },  
-      legend:{
-        cursor:"pointer",
-        verticalAlign: "bottom",
-        horizontalAlign: "left",
-        dockInsidePlotArea: true,
-        itemclick: toogleDataSeries
-      },
-      data: [{
-        type: "line",
-        showInLegend: true,
-        name: "Vertical Accuracy",
-        markerType: "square",
-        xValueFormatString: "DD MMM, YYYY",
-        color: "#F08080",
-        dataPoints: verticalPoints
-      },
-      {
-        type: "line",
-        showInLegend: true,
-        name: "Torsional Accuracy",
-        dataPoints: tangentialPoints
-      }]
-    });
-    chart.render();
+		function createChart() {
+      let chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        width: 1000,
+        height: 300,
+        axisX:{
+          valueFormatString: "DD MMM",
+          crosshair: {
+            enabled: true,
+            snapToDataPoint: true
+          }
+        },
+        axisY: {
+          title: "Accuracy (%)",
+          crosshair: {
+            enabled: true
+          }
+        },
+        toolTip:{
+          shared:true
+        },  
+        legend:{
+          cursor:"pointer",
+          verticalAlign: "bottom",
+          horizontalAlign: "left",
+          dockInsidePlotArea: true,
+          itemclick: toogleDataSeries
+        },
+        data: [{
+          type: "line",
+          showInLegend: true,
+          name: "Vertical Accuracy",
+          markerType: "square",
+          xValueFormatString: "DD MMM, YYYY",
+          color: "#F08080",
+          dataPoints: verticalPoints
+        },
+        {
+          type: "line",
+          showInLegend: true,
+          name: "Torsional Accuracy",
+          dataPoints: tangentialPoints
+        }]
+      });
+      chart.render();
+    }
+    console.log(verticalPoints);
     function toogleDataSeries(e){
       if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
         e.dataSeries.visible = false;
