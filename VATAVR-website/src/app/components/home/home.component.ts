@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit {
       animationEnabled: true,
       theme: "light2",
       width: 1000,
+      height: 300,
       axisX:{
         valueFormatString: "DD MMM",
         crosshair: {
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
       {
         type: "line",
         showInLegend: true,
-        name: "Tangential Accuracy",
+        name: "Torsional Accuracy",
         dataPoints: tangentialPoints
       }]
     });

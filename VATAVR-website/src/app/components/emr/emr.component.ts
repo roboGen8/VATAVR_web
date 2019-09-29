@@ -106,7 +106,7 @@ export class EmrComponent implements OnInit {
       {
         type: "line",
         showInLegend: true,
-        name: "Tangential Accuracy",
+        name: "Torsional Accuracy",
         dataPoints: tangentialPoints
       }]
     });
