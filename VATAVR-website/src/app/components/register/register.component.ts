@@ -3,6 +3,10 @@ import {Registration} from '../../DomainModels/registration';
 import {UserService} from '../../services/user-service';
 import {AuthRegistrationResponse} from '../../DomainModels/serverAuthRegistrationResponse';
 import {Router} from '@angular/router';
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/database";
+import "firebase/auth";
 
 @Component({
   selector: 'app-register',
@@ -35,7 +39,36 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
+  public writeUserData(registrationInfo) {
+    firebase.database().ref('users/' + registrationInfo.username).set({
+      Name: registrationInfo.name, 
+      Email: registrationInfo.email, 
+      PhoneNumber: registrationInfo.phoneNumber, 
+      UserType: registrationInfo.userType, 
+      Username: registrationInfo.username, 
+      Password: registrationInfo.password
+    });
+    this.router.navigate(['/Login']);
+  }
+
   public onRegister() {
+    var firebaseConfig = {
+      apiKey: "AIzaSyDFiyHhNrNAXR1LtciEqOr3WIQCK5fKLOU",
+      authDomain: "vatavr-90af0.firebaseapp.com",
+      databaseURL: "https://vatavr-90af0.firebaseio.com",
+      projectId: "vatavr-90af0",
+      storageBucket: "vatavr-90af0.appspot.com",
+      messagingSenderId: "260707015158",
+      appId: "1:260707015158:web:a440e6fa5ffa6e2e274fd7",
+      measurementId: "G-WN3HRPBT3R"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+
+    var database = firebase.database();
+
+    this.writeUserData(this.registrationInfo);
     /* if pass and confirm Pass match*/
     if (this.registrationInfo.password.localeCompare(this.confirmPass) === 0) {
       this.userService.register(this.registrationInfo).then((response) => {

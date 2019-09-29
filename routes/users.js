@@ -11,8 +11,10 @@ router.post('/register', (req, res, next) => {
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        userType: req.body.userType,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
     });
 
     /* Check if username already exists in db - if true, don't register this user */
