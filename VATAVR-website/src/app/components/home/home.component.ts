@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../services/user-service';
 import * as CanvasJS from './canvasjs.min';
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/database";
+import "firebase/auth";
+import {Globals} from '../globals'
+import { delay } from 'q';
 
 @Component({
   selector: 'app-home',
@@ -8,13 +14,59 @@ import * as CanvasJS from './canvasjs.min';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  globals: Globals;
   public username;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, globals: Globals) {
+    this.globals = globals;
+    // console.log(this.globals.username_global);
+   }
+
+   public meanVertical(arr) {
+    var sum = 0;
+    arr.forEach(function(item){  
+      sum += item
+    });  
+    sum /= arr.length;
+    sum /= 15;
+    sum *= 100;
+    return sum;
+   }
+
+   public meanTangential(arr) {
+    var sum = 0;
+   arr.forEach(function(item){  
+     sum += item
+   });  
+   sum /= arr.length;
+   sum /= 45;
+   sum *= 100;
+   return sum;
+  }
 
   ngOnInit() {
+    var firebaseConfig = {
+      apiKey: "AIzaSyDFiyHhNrNAXR1LtciEqOr3WIQCK5fKLOU",
+      authDomain: "vatavr-90af0.firebaseapp.com",
+      databaseURL: "https://vatavr-90af0.firebaseio.com",
+      projectId: "vatavr-90af0",
+      storageBucket: "vatavr-90af0.appspot.com",
+      messagingSenderId: "260707015158",
+      appId: "1:260707015158:web:a440e6fa5ffa6e2e274fd7",
+      measurementId: "G-WN3HRPBT3R"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    var database = firebase.database();
+
+    // console.log(this.globals.username_global);
     this.username = this.userService.getStoredLoggedInUsername();
+
+    var leadsRef = database.ref('results/' + this.username);
+    console.log(leadsRef);
+    var v_sum;
+    var t_sum;
     let verticalPoints = [
       { x: new Date(2017, 0, 3), y: 65 },
       { x: new Date(2017, 0, 4), y: 70 },
@@ -24,12 +76,7 @@ export class HomeComponent implements OnInit {
       { x: new Date(2017, 0, 8), y: 93 },
       { x: new Date(2017, 0, 9), y: 84 },
       { x: new Date(2017, 0, 10), y: 53 },
-      { x: new Date(2017, 0, 11), y: 89 },
-      { x: new Date(2017, 0, 12), y: 93 },
-      { x: new Date(2017, 0, 13), y: 90 },
-      { x: new Date(2017, 0, 14), y: 89 },
-      { x: new Date(2017, 0, 15), y: 80 },
-      { x: new Date(2017, 0, 16), y: 90 }
+      { x: new Date(2017, 0, 11), y: 89 }
     ];
     let tangentialPoints = [
       { x: new Date(2017, 0, 3), y: 51 },
@@ -40,13 +87,41 @@ export class HomeComponent implements OnInit {
       { x: new Date(2017, 0, 8), y: 63 },
       { x: new Date(2017, 0, 9), y: 67 },
       { x: new Date(2017, 0, 10), y: 63 },
-      { x: new Date(2017, 0, 11), y: 69 },
-      { x: new Date(2017, 0, 12), y: 63 },
-      { x: new Date(2017, 0, 13), y: 60 },
-      { x: new Date(2017, 0, 14), y: 52 },
-      { x: new Date(2017, 0, 15), y: 63 },
-      { x: new Date(2017, 0, 16), y: 50 }
+      { x: new Date(2017, 0, 11), y: 69 }
     ];
+    var count = 0;
+
+    leadsRef.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        console.log(childSnapshot.key);
+        var childData = childSnapshot.val();
+        console.log(childData.v0);
+        //Mean Vertical
+        v_sum = childData.v0 + childData.v1 +childData.v2 +childData.v3 + childData.v4;
+        
+        v_sum /= 5;
+        v_sum /= 15;
+        v_sum *= 100;
+        
+        //End of Mean Vertical
+      
+        //Mean Tangential
+        t_sum = childData.t0 + childData.t1 +childData.t2 +childData.t3 + childData.t4;
+        
+        t_sum /= 5;
+        t_sum /= 45;
+        t_sum *= 100;
+        //End of Tangential
+        let date = childSnapshot.key.split("-");
+        console.log(date);
+        verticalPoints[count] = {x: new Date(+date[2], +date[0] - 1, +date[1]), y: v_sum};
+        tangentialPoints[count] = {x: new Date(+date[2], +date[0] - 1, +date[1]), y: t_sum};
+        count++;
+        });
+        
+      });
+      console.log(verticalPoints);
+    
 		
 		let chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
@@ -107,3 +182,4 @@ export class HomeComponent implements OnInit {
   
   
 }
+

@@ -14,6 +14,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {UserService} from './services/user-service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EmrComponent } from './components/emr/emr.component';
+import { Globals } from './components/globals';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { EmrComponent } from './components/emr/emr.component';
     AppRoutingModule,
     NgbModule
   ],
-  providers: [UserService],
+  providers: [UserService, Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

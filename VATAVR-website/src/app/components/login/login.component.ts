@@ -7,11 +7,13 @@ import * as firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/database";
 import "firebase/auth";
+import {Globals} from '../globals'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [ Globals ]
 })
 export class LoginComponent implements OnInit {
 
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
   };
 
   /* tell Angular Inject userService singleton into this class as dependency and Router service */
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, public globals: Globals) {
   }
 
   ngOnInit() {
@@ -49,7 +51,7 @@ export class LoginComponent implements OnInit {
       var childData = childSnapshot.val();
       if (childData.Password != credentials.password)
       {
-        alert('Incorrect username or password');
+        // alert('Incorrect username or password');
         this.router.navigate(['/Login']);
         
       }
@@ -70,11 +72,15 @@ export class LoginComponent implements OnInit {
     // alert("Incorrect username or password");
     // this.router.navigate(['/Login']);
   }
-
+  saveUsername() {
+    this.globals.username_global = this.credentials.username;
+    console.log(this.globals.username_global);
+  }
   /** Method that utilizes userService to make authenticate API call and wait for asynchronous completion of request
    * if user is not found in the db, it will return -> res.json({success: false, msg: 'User not found'})
    * @see users.js in directory: Digital-Curated-Repository-Website/routes **/
   public login() {
+    // this.saveUsername(this.credentials.username);
     var firebaseConfig = {
       apiKey: "AIzaSyDFiyHhNrNAXR1LtciEqOr3WIQCK5fKLOU",
       authDomain: "vatavr-90af0.firebaseapp.com",
@@ -99,27 +105,7 @@ export class LoginComponent implements OnInit {
     //   });
     this.checkUser(database, this.credentials);
     
-    // this.userService.authenticate(this.credentials).then((response) => {
-    //     const res: AuthRegistrationResponse = response;
-    //     console.log('response received: ', response);
 
-    //     if (res.success === true) {
-    //       this.loginFailure = false;
-    //       this.loginSuccess = true;
-
-    //       /* Store the username in the angular service for later usage */
-    //       this.userService.storeLoggedInUsername(this.credentials.username);
-
-    //       /* navigate to Home Page on successful registration, delay by one sec and half */
-    //       setTimeout(() => {
-    //         this.router.navigate(['/Home']);
-    //       }, 1500);
-    //     } else {
-    //       this.loginFailure = true;
-    //       this.loginFailureMessage = 'Invalid Credentials';
-    //     }
-    //   }
-    // );
 
     this.loginFailure = false;
           this.loginSuccess = true;
