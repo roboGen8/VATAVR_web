@@ -8,9 +8,9 @@ text {
     padding: 1rem;
 }
 .container {
-    padding: 5rem 1rem;
+    padding: 5rem 0;
     background-color: white;
-    margin: 0px 150px;
+    margin-right: 80px;
 }
 .me {
     width: 125px;
@@ -30,7 +30,7 @@ text {
     justify-content: space-between;
     background-color: #546E7A;
     width: 100%;
-    padding: 0rem 25rem;
+    padding: 0rem 10rem;
 }
 .people {
     display: flex;
@@ -72,4 +72,52 @@ text {
     font-size: 24px;
     color: white;
     margin-left: 50px;
+}
+.doctorDashboard {
+    display: flex;
+    justify-content: space-between;
+}
+.LHS {
+    background-color: #546E7A;
+}
+
+.doctorProfile {
+    margin-bottom: 1rem !important;
+    padding: 1rem !important;
+    font-size: 16px !important;
+}
+
+.doctorProfile:hover {
+    background-color: rgb(103, 134, 148);
+}
+.doctorcontainer {
+    padding: 4rem 0 1rem 1rem;
+    background-color: white;
+}
+.doctorcard {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    color: white;
+    border: 0px;
+    height:100%;
+    
+}
+.doctorcardItem {
+    display: flex;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    width:1000px;
+    height: 75px;
+    color:black;
+    border: 1px;
+}
+.doctorcardItem:hover {
+    background-color: azure;
+}
+.doctorDate {
+    font-size: 12px;
+    color: black;
+    opacity: 0.7;
 }

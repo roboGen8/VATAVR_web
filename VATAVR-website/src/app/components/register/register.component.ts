@@ -59,6 +59,15 @@ export class RegisterComponent implements OnInit {
         Username: registrationInfo.username, 
         Password: registrationInfo.password
       });
+      firebase.database().ref('doctor2patient/' + registrationInfo.doctorName + '/' + registrationInfo.username).set({
+        Name: registrationInfo.name, 
+        Email: registrationInfo.email, 
+        PhoneNumber: registrationInfo.phoneNumber, 
+        UserType: registrationInfo.userType, 
+        Username: registrationInfo.username, 
+        Password: registrationInfo.password
+      });
+
     }
     
     this.router.navigate(['/Login']);

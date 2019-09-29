@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 		let chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
       theme: "light2",
-      width: 1500,
+      width: 1000,
       axisX:{
         valueFormatString: "DD MMM",
         crosshair: {
