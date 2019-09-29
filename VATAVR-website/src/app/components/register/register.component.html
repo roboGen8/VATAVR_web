@@ -51,7 +51,7 @@
       <div class="form-group row">
         <label for="password">Confirm Password</label>
         <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password"
-               [required]="true" [(ngModel)]="confirmPass" minlength="1" name="confirm-password">
+               [required]="true" [(ngModel)]="registrationInfo.password" minlength="1" name="confirm-password">
       </div>
       <div class="button-container">
         <button type="submit" class="btn btn-primary" (click)="onRegister()" [disabled]="!registerForm.form.valid">

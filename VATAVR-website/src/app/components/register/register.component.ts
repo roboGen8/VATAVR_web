@@ -26,8 +26,11 @@ export class RegisterComponent implements OnInit {
   public registrationInfo: Registration = {
     name: '',
     email: '',
+    phoneNumber: '',
+    userType: '',
     username: '',
-    password: ''
+    password: '',
+    doctorName: ''
   };
 
   /* confirm pass property for checking if passwords match */

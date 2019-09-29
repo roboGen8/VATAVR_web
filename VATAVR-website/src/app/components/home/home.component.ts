@@ -171,16 +171,17 @@ export class HomeComponent implements OnInit {
         }]
       });
       chart.render();
+      function toogleDataSeries(e){
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        } else{
+          e.dataSeries.visible = true;
+        }
+        chart.render();
+      }
     }
     console.log(verticalPoints);
-    function toogleDataSeries(e){
-      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-        e.dataSeries.visible = false;
-      } else{
-        e.dataSeries.visible = true;
-      }
-      chart.render();
-    }
+    
   }
 
   
